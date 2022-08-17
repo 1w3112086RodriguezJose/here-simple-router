@@ -1,0 +1,70 @@
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="here"></div>
+    <span>here coordinate search</span>
+    <input type="text" id="searchBox">
+    <button id="search">Search</button>
+    <button id="clean">Clean</button>
+    <button id="route">Route</button>
+    <span id="distance"></span>
+    <div id="here2" style="height: 400px; width: 400px;"></div>
+    <!-- <script src="scripts.js"></script> -->
+    <script src="mapFunctions.js">
+    </script>
+    <script>
+    
+            const route = document.getElementById('route')
+            const clean = document.getElementById('clean')
+            const search = document.getElementById('search')
+            const searchBox = document.getElementById('searchBox')
+            const h2 = document.getElementById("here")
+            let arr = [], map 
+            fetch('/apikey')
+                .then(data => data.json())
+                .then(json => {
+                     map = new Mapa(h2, json.key) 
+                     map.initialize()
+                    })
+            route.addEventListener('click', (e)=>{
+                console.log('route clicked');
+                if(map){
+                    if (arr.length<1){
+                        alert('no se se seleccionaron ubicaciones')
+                    }
+                    map.traceRoute(arr)
+                }
+            })
+            search.addEventListener('click', (e)=>{
+                console.log('search clicked');
+                if(map && !arr.includes(searchBox.value)){
+                    map.markPlace(searchBox.value)
+                    arr.push(searchBox.value)
+                }
+            })
+            clean.addEventListener('click', (e)=>{
+                console.log('clean clicked');
+                if(map){
+                    arr = []
+                    map.clean()
+                }
+            })
+
+    </script>
+</body>
+
+</html>

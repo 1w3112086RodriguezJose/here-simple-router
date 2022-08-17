@@ -1,0 +1,12 @@
+#here{
+    height: 91vh;
+    margin-bottom: 15px;
+}
+#distance{
+    position: absolute;
+    right: 15px;
+    bottom: 10px;
+}
+body{
+    background-color: darkgray;
+}
